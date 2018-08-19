@@ -1,0 +1,11 @@
+{
+  "extends": "standard",
+  "rules": {
+    "comma-dangle": ["error", "never"],
+    "space-before-function-paren": ["error", {
+      "anonymous": "always",
+      "named": "never"
+    }],
+    "semi": ["error", "always"]
+  }
+}

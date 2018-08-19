@@ -1,0 +1,45 @@
+{
+  "name": "dogeify-js",
+  "version": "1.0.0",
+  "description": "Turn text into doge. Based on the dogeify Ruby gem.",
+  "main": "index.js",
+  "author": "József Sallai <jozsef@sallai.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jozsefsallai/dogeify"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jozsefsallai/dogeify/issues"
+  },
+  "homepage": "https://github.com/jozsefsallai/dogeify",
+  "keywords": [
+    "doge",
+    "meme",
+    "conversion",
+    "text",
+    "cli",
+    "javascript"
+  ],
+  "bin": {
+    "dogeify": "./bin/dogeify.js"
+  },
+  "dependencies": {
+    "pos": "^0.4.2"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "mocha": "^5.2.0"
+  },
+  "scripts": {
+    "test": "mocha test",
+    "lint": "eslint . --ignore-pattern *.test.js",
+    "lint:fix": "eslint . --fix --ignore-pattern *.test.js"
+  }
+}
