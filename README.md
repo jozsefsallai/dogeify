@@ -1,5 +1,8 @@
 # Dogeify.js
 
+[![Build Status](https://travis-ci.org/jozsefsallai/dogeify.svg?branch=master)](https://travis-ci.org/jozsefsallai/dogeify)
+[![Dependency Status](https://david-dm.org/jozsefsallai/dogeify.svg)](https://david-dm.org/jozsefsallai/dogeify)
+
 A Node module that converts everyday English into doge. This is the JavaScript version of the [Dogeify Ruby gem](https://github.com/mhuggins/dogeify).
 
 ## Installation
