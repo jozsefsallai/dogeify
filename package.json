@@ -1,6 +1,6 @@
 {
   "name": "dogeify-js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Turn text into doge. Based on the dogeify Ruby gem.",
   "main": "index.js",
   "author": "József Sallai <jozsef@sallai.me>",
