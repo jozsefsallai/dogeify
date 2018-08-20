@@ -4,7 +4,9 @@ class Dogeify {
   constructor() {
     this.ADJECTIVES = 'so such very much many how'.split(' ');
     this.EMOTIONS = 'wow amaze excite'.split(' ');
-    this.newSentences = [];
+    this.forbiddenPhrases = [
+      're', 've'
+    ];
   };
 
   /**
@@ -22,12 +24,14 @@ class Dogeify {
     str = str
       .toLowerCase()
       .match(/[^.!?]+[.!?]+/g);
-    str = str.map(sentence => {
-      if (sentence[0] === ' ') {
-        return sentence.slice(1);
-      }
-      return sentence;
-    });
+    if (str && str.length) {
+      str = str.map(sentence => {
+        if (sentence && sentence[0] === ' ') {
+          return sentence.slice(1);
+        }
+        return sentence;
+      });
+    }
     return str;
   };
 
@@ -41,12 +45,17 @@ class Dogeify {
     const words = new pos.Lexer().lex(sentence);
     const tagger = new pos.Tagger();
     const taggedWords = tagger.tag(words);
-    const nouns = [];
+    let nouns = [];
     taggedWords.forEach((word) => {
       if (word[1] === 'NN') {
         nouns.push(word[0]);
       }
     });
+
+    nouns = nouns.filter((noun) => {
+      return !this.forbiddenPhrases.includes(noun);
+    });
+
     return nouns;
   };
 
@@ -110,12 +119,23 @@ class Dogeify {
    */
   init(str) {
     let sentences = this.getSentences(str);
-    sentences = sentences.map(sentence => {
-      let nouns = this.getNouns(sentence);
-      nouns = this.fixPhrases(nouns);
-      nouns.push(`${this.getEmotion()}.`);
-      return nouns.join(' ');
-    });
+    if (!sentences) {
+      sentences = [];
+    }
+    if (sentences.length) {
+      sentences = sentences.map(sentence => {
+        let nouns = this.getNouns(sentence);
+        if (nouns && nouns.length) {
+          nouns = this.fixPhrases(nouns);
+        } else {
+          nouns = [];
+        }
+        nouns.push(`${this.getEmotion()}.`);
+        return nouns.join(' ');
+      });
+    } else {
+      sentences.push(`${this.getEmotion()}.`);
+    }
 
     return sentences.join(' ');
   };

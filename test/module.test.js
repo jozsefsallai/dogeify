@@ -6,7 +6,7 @@ describe('Dogeify module', function () {
     beforeEach(function () {
       const str = 'The quick brown fox jumps over the lazy dog.';
       this.dogeified = dogeify(str);
-    })
+    });
 
     it('should include only the nouns', function () {
       expect(this.dogeified).to.include('fox');
@@ -32,7 +32,8 @@ describe('Dogeify module', function () {
       ];
 
       this.dogeified = dogeify.array(this.arr);
-    })
+    });
+
     it('should be the same length as the original array', function () {
       expect(this.dogeified).to.have.length(this.arr.length);
     });

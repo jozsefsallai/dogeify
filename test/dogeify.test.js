@@ -22,6 +22,15 @@ describe('Dogeify class', function () {
       const nouns = dogeify.getNouns(sentence);
       expect(nouns).to.eql(expectedResult);
     });
+
+    it('should not contain forbidden phrases', function () {
+      const sentence = "You're a good boy. You've chased the postman.";
+      const expectedResult = [ 'boy', 'postman' ];
+      const nouns = dogeify.getNouns(sentence);
+      expect(nouns).to.not.include('re');
+      expect(nouns).to.not.include('ve');
+      expect(nouns).to.eql(expectedResult);
+    });
   });
 
   describe('#correctSpelling', function () {
@@ -53,6 +62,18 @@ describe('Dogeify class', function () {
         const transformedNoun = phrase.split(' ')[1].slice(0, -1);
         expect(dogeify.ADJECTIVES).to.include(adjective);
         expect(transformedNoun).to.eql(correctSpelling[idx]);
+      });
+    });
+  });
+
+  describe('#init', function () {
+    describe('when passing dot character', function () {
+      it('should return only emotion', function () {
+        const dogeified = dogeify.init('.');
+        const dogeifiedArray = dogeified.split('.');
+        expect(dogeifiedArray).to.have.length(2);
+        expect(dogeifiedArray[1]).to.be.empty;
+        expect(dogeify.EMOTIONS).to.include(dogeifiedArray[0]);
       });
     });
   });
