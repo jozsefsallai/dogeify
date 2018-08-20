@@ -5,6 +5,8 @@
 
 A Node module that converts everyday English into doge. This is the JavaScript version of the [Dogeify Ruby gem](https://github.com/mhuggins/dogeify).
 
+**LIVE DEMO: https://sallai.me/examples/dogeify**
+
 ## Installation
 
 Yarn:
