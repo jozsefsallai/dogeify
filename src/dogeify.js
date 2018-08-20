@@ -47,7 +47,7 @@ class Dogeify {
     const taggedWords = tagger.tag(words);
     let nouns = [];
     taggedWords.forEach((word) => {
-      if (word[1] === 'NN') {
+      if (word[1] === 'NN' || word[1] === 'NNS') {
         nouns.push(word[0]);
       }
     });

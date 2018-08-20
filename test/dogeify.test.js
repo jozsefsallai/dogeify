@@ -31,6 +31,13 @@ describe('Dogeify class', function () {
       expect(nouns).to.not.include('ve');
       expect(nouns).to.eql(expectedResult);
     });
+
+    it('should work for plural nouns too', function () {
+      const sentence = 'I have seen dogs and cats.';
+      const expectedResult = [ 'dogs', 'cats' ];
+      const nouns = dogeify.getNouns(sentence);
+      expect(nouns).to.eql(expectedResult);
+    });
   });
 
   describe('#correctSpelling', function () {
