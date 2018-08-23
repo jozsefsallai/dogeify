@@ -44,4 +44,16 @@ describe('Dogeify module', function () {
       });
     });
   });
+
+  describe('when passing options', function () {
+    beforeEach(function () {
+      this.dogeified = dogeify('I saw a dog and a cat.', {
+        ignore: [ 'cat' ]
+      });  
+    });
+
+    it('should ignore words', function () {
+      expect(this.dogeified).to.not.include('cat');
+    });
+  });
 });

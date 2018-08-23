@@ -91,5 +91,14 @@ describe('Dogeify class', function () {
         expect(dogeify.EMOTIONS).to.include(dogeifiedArray[0]);
       });
     });
+
+    describe('when passing ignore options', function () {
+      it('should exclude the words from the phrases array', function () {
+        const dogeified = dogeify.init('I saw a dog and a cat.', {
+          ignore: [ 'cat' ]
+        });
+        expect(dogeified).to.not.include('cat');
+      });
+    });
   });
 });

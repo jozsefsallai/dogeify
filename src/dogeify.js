@@ -52,6 +52,10 @@ class Dogeify {
       }
     });
 
+    if (this.ignore && this.ignore.length) {
+      this.forbiddenPhrases = this.forbiddenPhrases.concat(this.ignore);
+    }
+
     nouns = nouns.filter((noun) => {
       return !this.forbiddenPhrases.includes(noun);
     });
@@ -117,7 +121,11 @@ class Dogeify {
    * @param {String} str
    * @returns {String}
    */
-  init(str) {
+  init(str, opts = {}) {
+    if (opts) {
+      Object.assign(this, opts);
+    }
+
     let sentences = this.getSentences(str);
     if (!sentences) {
       sentences = [];

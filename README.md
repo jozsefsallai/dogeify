@@ -50,12 +50,23 @@ console.log(dogeify.array(arr));
 */
 ```
 
+You can provide an array of words to exclude from the output:
+
+```js
+console.log(dogeify('I saw a dog and a cat.', {
+  ignore: [ 'cat' ]
+}));
+// such doge. wow.
+```
+
 **Usage in the CLI:**
 
 ```
 > dogeify The quick brown fox jumps over the lazy dog.
 such fox. much doge. amaze.
 ```
+
+**Will there ever be a browser version?** Right now, exporting the module to be used in the browser would be... pretty heavy. So, unless I (or someone else) can come up with a better solution for retrieving parts of speech in a browser-friendly mode, there will not be a browser version. Sorry!
 
 ## Contribution
 
