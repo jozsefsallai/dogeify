@@ -32,6 +32,14 @@ describe('Dogeify class', function () {
       expect(nouns).to.eql(expectedResult);
     });
 
+    it('should not include /', function () {
+      const sentence = 'I saw a dog/cat';
+      const expectedResult = [ 'dog', 'cat' ];
+      const nouns = dogeify.getNouns(sentence);
+      expect(nouns).to.not.include('/');
+      expect(nouns).to.eql(expectedResult);
+    });
+
     it('should work for plural nouns too', function () {
       const sentence = 'I have seen dogs and cats.';
       const expectedResult = [ 'dogs', 'cats' ];

@@ -5,7 +5,7 @@ class Dogeify {
     this.ADJECTIVES = 'so such very much many how'.split(' ');
     this.EMOTIONS = 'wow amaze excite'.split(' ');
     this.forbiddenPhrases = [
-      're', 've'
+      're', 've', '/'
     ];
   };
 
