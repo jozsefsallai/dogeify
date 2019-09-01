@@ -1,6 +1,6 @@
 {
   "name": "dogeify-js",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Turn text into doge. Based on the dogeify Ruby gem.",
   "main": "index.js",
   "author": "József Sallai <jozsef@sallai.me>",
@@ -25,10 +25,12 @@
     "dogeify": "./bin/dogeify.js"
   },
   "dependencies": {
-    "pos": "^0.4.2"
+    "isomorphic-fetch": "^2.2.1",
+    "pluralize": "^8.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.12.0",

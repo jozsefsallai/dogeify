@@ -3,9 +3,9 @@ const expect = require('chai').expect;
 
 describe('Dogeify module', function () {
   describe('when passing a string', function () {
-    beforeEach(function () {
+    beforeEach(async function () {
       const str = 'The quick brown fox jumps over the lazy dog.';
-      this.dogeified = dogeify(str);
+      this.dogeified = await dogeify(str);
     });
 
     it('should include only the nouns', function () {
@@ -25,13 +25,13 @@ describe('Dogeify module', function () {
   });
 
   describe('when passing an array', function () {
-    beforeEach(function () {
+    beforeEach(async function () {
       this.arr = [
         'Hello world. My owner is a good boy.',
         'I saw a cat today on the street while going to the grocery store'
       ];
 
-      this.dogeified = dogeify.array(this.arr);
+      this.dogeified = await dogeify.array(this.arr);
     });
 
     it('should be the same length as the original array', function () {
@@ -46,8 +46,8 @@ describe('Dogeify module', function () {
   });
 
   describe('when passing options', function () {
-    beforeEach(function () {
-      this.dogeified = dogeify('I saw a dog and a cat.', {
+    beforeEach(async function () {
+      this.dogeified = await dogeify('I saw a dog and a cat.', {
         ignore: [ 'cat' ]
       });  
     });

@@ -2,7 +2,11 @@ const expect = require('chai').expect;
 const Dogeify = require('../src/dogeify');
 const dogeify = new Dogeify();
 
-describe('Dogeify class', function () {
+describe('Dogeify class', async function () {
+  before(async function () {
+    await dogeify.fillNouns();
+  });
+
   describe('#getSentences', function () {
     it('should return the correct sentences', function () {
       const text = 'This is an example text! It should return two sentences.';
@@ -15,17 +19,32 @@ describe('Dogeify class', function () {
     });
   });
 
+  describe('#isWordForbidden', function () {
+    it('should return false for allowed word', function () {
+      return expect(dogeify.isWordForbidden('hello')).to.be.false;
+    });
+
+    it('should return true for forbidden word', function () {
+      return expect(dogeify.isWordForbidden('re')).to.be.true;
+    });
+
+    it('should return true for ignored word', function () {
+      dogeify.ignore = [ 'hey' ];
+      return expect(dogeify.isWordForbidden('hey')).to.be.true;
+    });
+  });
+
   describe('#getNouns', function () {
     it('should return the correct list of nouns', function () {
       const sentence = 'the quick brown fox jumped over the lazy dog, a cat also arrived';
-      const expectedResult = [ 'fox', 'dog', 'cat' ];
+      const expectedResult = [ 'brown', 'fox', 'dog', 'cat' ];
       const nouns = dogeify.getNouns(sentence);
       expect(nouns).to.eql(expectedResult);
     });
 
     it('should not contain forbidden phrases', function () {
-      const sentence = "You're a good boy. You've chased the postman.";
-      const expectedResult = [ 'boy', 'postman' ];
+      const sentence = "You're a good boy. You've chased the squirrel.";
+      const expectedResult = [ 'good', 'boy', 'squirrel' ];
       const nouns = dogeify.getNouns(sentence);
       expect(nouns).to.not.include('re');
       expect(nouns).to.not.include('ve');
@@ -33,7 +52,7 @@ describe('Dogeify class', function () {
     });
 
     it('should not include /', function () {
-      const sentence = 'I saw a dog/cat';
+      const sentence = 'I\'ve seen a dog/cat';
       const expectedResult = [ 'dog', 'cat' ];
       const nouns = dogeify.getNouns(sentence);
       expect(nouns).to.not.include('/');
@@ -81,10 +100,16 @@ describe('Dogeify class', function () {
     });
   });
 
+  describe('#fillNouns', async function () {
+    const doge = new Dogeify();
+    await doge.fillNouns();
+    return expect(doge.allNouns).to.have.length.greaterThan(0);
+  });
+
   describe('#init', function () {
     describe('when passing dot character', function () {
-      it('should return only emotion', function () {
-        const dogeified = dogeify.init('.');
+      it('should return only emotion', async function () {
+        const dogeified = await dogeify.init('.');
         const dogeifiedArray = dogeified.split('.');
         expect(dogeifiedArray).to.have.length(2);
         expect(dogeifiedArray[1]).to.be.empty;
@@ -93,11 +118,11 @@ describe('Dogeify class', function () {
     });
 
     describe('when passing ignore options', function () {
-      it('should exclude the words from the phrases array', function () {
-        const dogeified = dogeify.init('I saw a dog and a cat.', {
+      it('should exclude the words from the phrases array', async function () {
+        const dogeified = await dogeify.init('I saw a dog and a cat.', {
           ignore: [ 'cat' ]
         });
-        expect(dogeified).to.not.include('cat');
+        return expect(dogeified).to.not.include('cat');
       });
     });
   });

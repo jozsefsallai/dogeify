@@ -5,8 +5,6 @@
 
 A Node module that converts everyday English into doge. This is the JavaScript version of the [Dogeify Ruby gem](https://github.com/mhuggins/dogeify).
 
-**LIVE DEMO: https://sallai.me/examples/dogeify**
-
 ## Installation
 
 Yarn:
@@ -31,7 +29,7 @@ You can use this module in your Node project or the CLI.
 const dogeify = require('dogeify-js');
 
 const str = 'The quick brown fox jumps over the lazy dog. A cat is walking on the street';
-console.log(dogeify(str)); // very fox. such doge. amaze. many cat. so street. wow.
+console.log(await dogeify(str)); // very fox. very brown. such doge. amaze. many cat. so street. wow.
 ```
 
 You can also pass an array to convert to doge:
@@ -41,10 +39,10 @@ const arr = [
   'The quick brown fox jumps over the lazy dog.',
   'A cat is walking on the street.'
 ];
-console.log(dogeify.array(arr));
+console.log(await dogeify.array(arr));
 /* Returns:
   [
-    'very fox. such doge. excite.',
+    'much brown. very fox. such doge. excite.',
     'so cat. very street. amaze.
   ]
 */
@@ -53,7 +51,7 @@ console.log(dogeify.array(arr));
 You can provide an array of words to exclude from the output:
 
 ```js
-console.log(dogeify('I saw a dog and a cat.', {
+console.log(await dogeify('I\'ve seen a dog and a cat.', {
   ignore: [ 'cat' ]
 }));
 // such doge. wow.
@@ -63,10 +61,10 @@ console.log(dogeify('I saw a dog and a cat.', {
 
 ```
 > dogeify The quick brown fox jumps over the lazy dog.
-such fox. much doge. amaze.
+very brown. such fox. much doge. amaze.
 ```
 
-**Will there ever be a browser version?** Right now, exporting the module to be used in the browser would be... pretty heavy. So, unless I (or someone else) can come up with a better solution for retrieving parts of speech in a browser-friendly mode, there will not be a browser version. Sorry!
+**Will there ever be a browser version?** Maybe in the future, if there will be interest.
 
 ## Contribution
 

@@ -11,5 +11,12 @@ if (!args.length) {
 
 const fullString = args.join(' ');
 
-console.log(dogeify.init(fullString));
-process.exit(0);
+dogeify.init(fullString)
+  .then(result => {
+    console.log(result);
+    process.exit(0);
+  })
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });

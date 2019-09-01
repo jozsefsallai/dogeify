@@ -1,4 +1,5 @@
-const pos = require('pos');
+const fetch = require('isomorphic-fetch');
+const pluralize = require('pluralize');
 
 class Dogeify {
   constructor() {
@@ -7,6 +8,7 @@ class Dogeify {
     this.forbiddenPhrases = [
       're', 've', '/'
     ];
+    this.allNouns = [];
   };
 
   /**
@@ -36,31 +38,26 @@ class Dogeify {
   };
 
   /**
+   * isWordForbidden()
+   * Checks if a word should be forbidden or ignored
+   * @param {String} word
+   * @returns {Boolean}
+   */
+  isWordForbidden(word) {
+    return this.forbiddenPhrases.includes(word) || !!(this.ignore && this.ignore.includes(word));
+  }
+
+  /**
    * getNouns()
    * Returns an array of the nouns in a sentence
    * @param {String} sentence
    * @returns {Array}
    */
   getNouns(sentence) {
-    const words = new pos.Lexer().lex(sentence);
-    const tagger = new pos.Tagger();
-    const taggedWords = tagger.tag(words);
-    let nouns = [];
-    taggedWords.forEach((word) => {
-      if (word[1] === 'NN' || word[1] === 'NNS') {
-        nouns.push(word[0]);
-      }
-    });
-
-    if (this.ignore && this.ignore.length) {
-      this.forbiddenPhrases = this.forbiddenPhrases.concat(this.ignore);
-    }
-
-    nouns = nouns.filter((noun) => {
-      return !this.forbiddenPhrases.includes(noun);
-    });
-
-    return nouns;
+    return sentence
+      .split(/\/| /g)
+      .map(word => word.replace(/[^a-zA-Z0-9\-']+/g, ''))
+      .filter(word => this.allNouns.includes(word) && !this.isWordForbidden(word));
   };
 
   /**
@@ -116,15 +113,47 @@ class Dogeify {
   };
 
   /**
+   * fillNouns()
+   * Fills the allNouns array with all nouns
+   */
+  fillNouns() {
+    return fetch('http://www.desiquintans.com/downloads/nounlist/nounlist.txt', {
+      method: 'GET',
+      headers: {
+        'Accept': 'text/plain',
+        'Content-Type': 'text/plain'
+      }
+    })
+      .then(async res => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch noun list.');
+        }
+
+        const full = await res.text();
+        const nouns = full.split('\n');
+
+        this.allNouns = [
+          ...nouns,
+          ...nouns.map(n => pluralize(n))
+        ];
+      })
+      .catch(err => {
+        throw new Error(err);
+      });
+  }
+
+  /**
    * init()
    * Initializes the dogeifying process
    * @param {String} str
    * @returns {String}
    */
-  init(str, opts = {}) {
+  async init(str, opts = {}) {
     if (opts) {
       Object.assign(this, opts);
     }
+
+    await this.fillNouns();
 
     let sentences = this.getSentences(str);
     if (!sentences) {
